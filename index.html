@@ -1,46 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-    <title>حاسبتي الاحترافية</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة Ahmed Abdul Lateef</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; background: #f0f0f0; }
-        .calc { background: #333; padding: 20px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        input { width: 100%; height: 50px; font-size: 24px; text-align: right; margin-bottom: 10px; border: none; padding: 10px; box-sizing: border-box; }
-        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        button { padding: 20px; font-size: 18px; cursor: pointer; border: none; border-radius: 5px; background: #555; color: white; }
-        button:hover { background: #777; }
-        .equal { background: #ff9500; grid-column: span 2; }
+        :root {
+            --bg-color: #e0e5ec;
+            --calc-bg: #e0e5ec;
+            --text-color: #444;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+            --accent: #6d5dfc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .calculator {
+            background-color: var(--calc-bg);
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 9px 9px 16px var(--shadow-dark), 
+                        -9px -9px 16px var(--shadow-light);
+            width: 320px;
+        }
+
+        .display {
+            width: 100%;
+            height: 60px;
+            background: none;
+            border: none;
+            outline: none;
+            text-align: right;
+            font-size: 32px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            padding: 10px;
+            box-sizing: border-box;
+            box-shadow: inset 3px 3px 6px var(--shadow-dark), 
+                        inset -3px -3px 6px var(--shadow-light);
+            border-radius: 10px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            background-color: var(--calc-bg);
+            color: var(--text-color);
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px var(--shadow-dark), 
+                        -5px -5px 10px var(--shadow-light);
+            transition: all 0.2s ease;
+        }
+
+        button:active {
+            box-shadow: inset 2px 2px 5px var(--shadow-dark), 
+                        inset -2px -2px 5px var(--shadow-light);
+            transform: scale(0.95);
+        }
+
+        .operator { color: var(--accent); }
+        .clear { color: #f44336; }
+        .equal {
+            background-color: var(--accent);
+            color: white;
+            border-radius: 15px;
+            grid-column: span 2;
+            width: 100%;
+        }
+        
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
 
-<div class="calc">
-    <input type="text" id="result" readonly>
+<div class="calculator">
+    <input type="text" class="display" id="screen" readonly placeholder="0">
     <div class="buttons">
-        <button onclick="clearRes()">C</button>
-        <button onclick="add('/')">/</button>
-        <button onclick="add('*')">x</button>
-        <button onclick="add('-')">-</button>
-        <button onclick="add('7')">7</button>
-        <button onclick="add('8')">8</button>
-        <button onclick="add('9')">9</button>
-        <button onclick="add('+')">+</button>
-        <button onclick="add('4')">4</button>
-        <button onclick="add('5')">5</button>
-        <button onclick="add('6')">6</button>
-        <button onclick="calc()">=</button>
-        <button onclick="add('1')">1</button>
-        <button onclick="add('2')">2</button>
-        <button onclick="add('3')">3</button>
-        <button onclick="add('0')">0</button>
-    </div>
+        <button class="clear" onclick="clearScreen()">C</button>
+        <button class="operator" onclick="deleteLast()">DEL</button>
+        <button class="operator" onclick="append('%')">%</button>
+        <button class="operator" onclick="append('/')">÷</button>
+        
+        <button onclick="append('7')">7</button>
+        <button onclick="append('8')">8</button>
+        <button onclick="append('9')">9</button>
+        <button class="operator" onclick="append('*')">×</button>
+        
+        <button onclick="append('4')">4</button>
+        <button onclick="append('5')">5</button>
+        <button onclick="append('6')">6</button>
+        <button class="operator" onclick="append('-')">-</button>
+        
+        <button onclick="append('1')">1</button>
+        <button onclick="append('2')">2</button>
+        <button onclick="append('3')">3</button>
+        <button class="operator" onclick="append('+')">+</button>
+        
+        <button onclick="append('0')">0</button>
+        <button onclick="append('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+        </div>
+    <div class="footer">Developed by: Ahmed Abdul Lateef</div>
 </div>
 
 <script>
-    let res = document.getElementById('result');
-    function add(v) { res.value += v; }
-    function clearRes() { res.value = ''; }
-    function calc() { try { res.value = eval(res.value); } catch { res.value = 'Error'; } }
+    let screen = document.getElementById('screen');
+
+    function append(val) {
+        if (screen.value === "Error") screen.value = "";
+        screen.value += val;
+    }
+
+    function clearScreen() {
+        screen.value = "";
+    }
+
+    function deleteLast() {
+        screen.value = screen.value.slice(0, -1);
+    }
+
+    function calculate() {
+        try {
+            let result = eval(screen.value.replace('×', '*').replace('÷', '/'));
+            screen.value = result;
+        } catch (e) {
+            screen.value = "Error";
+        }
+    }
 </script>
 
 </body>
