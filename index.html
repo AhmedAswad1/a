@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>حاسبتي الاحترافية</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; background: #f0f0f0; }
+        .calc { background: #333; padding: 20px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        input { width: 100%; height: 50px; font-size: 24px; text-align: right; margin-bottom: 10px; border: none; padding: 10px; box-sizing: border-box; }
+        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        button { padding: 20px; font-size: 18px; cursor: pointer; border: none; border-radius: 5px; background: #555; color: white; }
+        button:hover { background: #777; }
+        .equal { background: #ff9500; grid-column: span 2; }
+    </style>
+</head>
+<body>
+
+<div class="calc">
+    <input type="text" id="result" readonly>
+    <div class="buttons">
+        <button onclick="clearRes()">C</button>
+        <button onclick="add('/')">/</button>
+        <button onclick="add('*')">x</button>
+        <button onclick="add('-')">-</button>
+        <button onclick="add('7')">7</button>
+        <button onclick="add('8')">8</button>
+        <button onclick="add('9')">9</button>
+        <button onclick="add('+')">+</button>
+        <button onclick="add('4')">4</button>
+        <button onclick="add('5')">5</button>
+        <button onclick="add('6')">6</button>
+        <button onclick="calc()">=</button>
+        <button onclick="add('1')">1</button>
+        <button onclick="add('2')">2</button>
+        <button onclick="add('3')">3</button>
+        <button onclick="add('0')">0</button>
+    </div>
+</div>
+
+<script>
+    let res = document.getElementById('result');
+    function add(v) { res.value += v; }
+    function clearRes() { res.value = ''; }
+    function calc() { try { res.value = eval(res.value); } catch { res.value = 'Error'; } }
+</script>
+
+</body>
+</html>
