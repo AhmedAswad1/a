@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حاسبة Ahmed Abdul Lateef</title>
     <style>
+        /* هنا يمكنك تغيير الألوان بسهولة */
         :root {
-          --bg-color: #000000;
---calc-bg: #1c1c1e;
---text-color: #ffffff;
---accent: #ff9f0a; /* برتقالي جذاب */
---shadow-dark: #000000;
---shadow-light: #2c2c2e;
+            --bg-color: #0f172a;       /* لون خلفية الشاشة (كحلي غامق جداً) */
+            --calc-bg: #1e293b;        /* لون جسم الحاسبة */
+            --text-color: #f8fafc;     /* لون الأرقام */
+            --accent: #38bdf8;         /* لون العمليات (أزرق سماوي) */
+            --equal-btn: #0ea5e9;      /* لون زر اليساوي */
+            --clear-btn: #ef4444;      /* لون زر المسح */
         }
 
         body {
@@ -21,80 +22,68 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         .calculator {
             background-color: var(--calc-bg);
             padding: 25px;
-            border-radius: 30px;
-            box-shadow: 9px 9px 16px var(--shadow-dark), 
-                        -9px -9px 16px var(--shadow-light);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             width: 320px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .display {
             width: 100%;
-            height: 60px;
-            background: none;
+            height: 70px;
+            background: rgba(0,0,0,0.2);
             border: none;
             outline: none;
             text-align: right;
-            font-size: 32px;
+            font-size: 36px;
             color: var(--text-color);
             margin-bottom: 20px;
-            padding: 10px;
+            padding: 15px;
             box-sizing: border-box;
-            box-shadow: inset 3px 3px 6px var(--shadow-dark), 
-                        inset -3px -3px 6px var(--shadow-light);
-            border-radius: 10px;
+            border-radius: 12px;
         }
 
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 12px;
         }
 
         button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            height: 65px;
+            border-radius: 12px;
             border: none;
-            outline: none;
-            background-color: var(--calc-bg);
+            background-color: #334155;
             color: var(--text-color);
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 20px;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 5px 5px 10px var(--shadow-dark), 
-                        -5px -5px 10px var(--shadow-light);
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
 
-        button:active {
-            box-shadow: inset 2px 2px 5px var(--shadow-dark), 
-                        inset -2px -2px 5px var(--shadow-light);
-            transform: scale(0.95);
-        }
+        button:hover { background-color: #475569; }
+        button:active { transform: scale(0.9); }
 
-        .operator { color: var(--accent); }
-        .clear { color: #f44336; }
+        .operator { color: var(--accent); background-color: #1e293b; border: 1px solid #334155; }
+        .clear { color: var(--clear-btn); }
         .equal {
-            background-color: var(--accent);
+            background-color: var(--equal-btn);
             color: white;
-            border-radius: 15px;
             grid-column: span 2;
-            width: 100%;
         }
         
         .footer {
             margin-top: 25px;
             text-align: center;
             font-size: 14px;
-            color: #555;
-            font-weight: bold;
-            letter-spacing: 0.5px;
+            color: #94a3b8;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -126,35 +115,22 @@
         <button onclick="append('0')">0</button>
         <button onclick="append('.')">.</button>
         <button class="equal" onclick="calculate()">=</button>
-        </div>
+    </div>
     <div class="footer">Developed by: Ahmed Abdul Lateef</div>
 </div>
 
 <script>
     let screen = document.getElementById('screen');
-
-    function append(val) {
-        if (screen.value === "Error") screen.value = "";
-        screen.value += val;
-    }
-
-    function clearScreen() {
-        screen.value = "";
-    }
-
-    function deleteLast() {
-        screen.value = screen.value.slice(0, -1);
-    }
-
+    function append(val) { if (screen.value === "Error") screen.value = ""; screen.
+        value += val; }
+    function clearScreen() { screen.value = ""; }
+    function deleteLast() { screen.value = screen.value.slice(0, -1); }
     function calculate() {
         try {
             let result = eval(screen.value.replace('×', '*').replace('÷', '/'));
-            screen.value = result;
-        } catch (e) {
-            screen.value = "Error";
-        }
+            screen.value = Number.isInteger(result) ? result : result.toFixed(2);
+        } catch (e) { screen.value = "Error"; }
     }
 </script>
-
 </body>
 </html>
