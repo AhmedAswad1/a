@@ -3,127 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حاسبة Ahmed Abdul Lateef المطورة</title>
+    <title>حاسبة Ahmed Abdul Lateef</title>
     <style>
         :root {
-            /* تدرجات الأسود للخلفية جُعلت هنا لسهولة التعديل */
-            --bg-gradient: radial-gradient(circle, #2d3436 0%, #000000 100%);
-            --calc-bg: #1e1e1e;        /* لون جسم الحاسبة الأسود */
-            --text-color: #ffffff;     /* لون الأرقام الأبيض */
-            --accent: #0984e3;         /* لون العمليات الأزرق الملكي */
-            --equal-btn: #0984e3;      /* لون زر اليساوي */
-            --clear-btn: #d63031;      /* لون زر المسح الأحمر */
-            --btn-bg: #2d3436;         /* لون الأزرار العادية */
-            --btn-hover: #3b4252;      /* لون الأزرار عند تمرير الماوس */
+            --bg-color: #000000;       /* خلفية الشاشة سوداء صافية */
+            --calc-bg: #1a1a1a;        /* جسم الحاسبة رمادي داكن ليتميز عن الخلفية */
+            --text-color: #ffffff;     /* لون الأرقام */
+            --accent: #00a8ff;         /* لون أزرق للعمليات */
+            --btn-bg: #262626;         /* لون الأزرار العادية */
+            --display-bg: #0d0d0d;     /* لون شاشة الأرقام */
         }
 
         body {
-            /* تطبيق تدرج اللون الأسود على الخلفية */
-            background: var(--bg-gradient);
+            background-color: var(--bg-color);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden; /* لمنع التمرير غير الضروري */
+            font-family: 'Segoe UI', sans-serif;
         }
 
         .calculator {
             background-color: var(--calc-bg);
-            padding: 30px;
+            padding: 25px;
             border-radius: 25px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-            width: 340px;
-            border: 1px solid rgba(255,255,255,0.05);
-            position: relative;
+            width: 330px;
+            /* إضافة إطار خفيف جداً حول الحاسبة لتكون واضحة وسط السواد */
+            border: 1px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,1);
         }
 
         .display {
             width: 100%;
-            height: 80px;
-            background: rgba(0,0,0,0.3);
-            border: none;
+            height: 75px;
+            background: var(--display-bg);
+            border: 1px solid #222;
             outline: none;
             text-align: right;
-            font-size: 42px;
+            font-size: 40px;
             color: var(--text-color);
-            margin-bottom: 25px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
             box-sizing: border-box;
             border-radius: 15px;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.5);
         }
 
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 12px;
         }
 
         button {
-            height: 70px;
+            height: 65px;
             border-radius: 15px;
             border: none;
             background-color: var(--btn-bg);
             color: var(--text-color);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
             cursor: pointer;
-            
-            /* تمهيد للانتقال الحركي */
-            transition: all 0.1s ease-out; 
-            position: relative;
-            overflow: hidden;
+            transition: all 0.1s ease-out;
             outline: none;
         }
 
-        /* تأثير تمرير الماوس */
-        button:hover {
-            background-color: var(--btn-hover);
-        }
-
-        /* تأثير الفقاعة عند الضغط (Active State) */
+        /* تأثير الفقاعة عند الضغط */
         button:active {
-            /* تكبير بسيط ثم تصغير بسرعة */
-            transform: scale(1.1); 
-            
-            /* إضافة ظل خارجي ناعم يشبه الفقاعة */
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15); 
-            
-            /* جعل الانتقال سريعاً جداً عند الضغط */
-            transition: transform 0.05s ease-in-out; 
+            transform: scale(1.15); 
+            background-color: #444;
         }
 
-        /* العودة للحجم الطبيعي عند الإفلات */
-        button:not(:active) {
-             transition: transform 0.2s ease-out;
-        }
-
-        .operator {
-            color: var(--accent);
-            background-color: #1a1a1a;
-            border: 1px solid #333;
-        }
-
-        .clear {
-            color: var(--clear-btn);
-        }
-
+        .operator { color: var(--accent); background-color: #202020; }
+        .clear { color: #ff4757; }
         .equal {
-            background-color: var(--equal-btn);
+            background-color: var(--accent);
             color: white;
             grid-column: span 2;
             width: 100%;
         }
         
         .footer {
-            margin-top: 30px;
+            margin-top: 25px;
             text-align: center;
-            font-size: 14px;
-            color: #7f8c8d;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            font-size: 13px;
+            color: #444;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -160,32 +125,18 @@
 </div>
 
 <script>
-    let screen = document.getElementById('screen');
-
-    function append(val) {
-        if (screen.value === "Error") screen.value = "";
-        screen.value += val;
-    }
-
-    function clearScreen() {
-        screen.value = "";
-    }
-
-    function deleteLast() {
-        screen.value = screen.value.slice(0, -1);
-    }
-
+    let screen = document.
+     getElementById('screen');
+    function append(val) { if (screen.value === "Error") screen.value = ""; screen.value += val; }
+    function clearScreen() { screen.value = ""; }
+    function deleteLast() { screen.value = screen.value.slice(0, -1); }
     function calculate() {
         try {
-            // استبدال الرموز لتعمل مع برمجة جافاسكريبت
             let result = eval(screen.value.replace('×', '*').replace('÷', '/'));
-            // التحقق مما إذا كان الناتج عدداً صحيحاً أم عشرياً لتنسيقه
             screen.value = Number.isInteger(result) ? result : result.toFixed(2);
-        } catch (e) {
-            screen.value = "Error";
-        }
+        } catch (e) { screen.value = "Error"; }
     }
 </script>
 
 </body>
-</html>
+</html>   
