@@ -1,88 +1,39 @@
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <string>
-
+#include <iostream >
 using namespace std;
-
-class Student {
-public:
-    int id;
-    string name;
-    double gpa;
-
-    void display() {
-        cout << "ID: " << id << " | Name: " << name << " | GPA: " << gpa << endl;
-    }
-
-    // تحويل البيانات لنص ليتم حفظها في ملف
-    string toString() {
-        return to_string(id) + "," + name + "," + to_string(gpa);
-    }
-};
-
-class Management {
-private:
-    vector<Student> students;
-    string fileName = "students.txt";
-
-public:
-    Management() {
-        loadFromFile();
-    }
-
-    void addStudent(int id, string name, double gpa) {
-        Student s = {id, name, gpa};
-        students.push_back(s);
-        saveToFile();
-        cout << "✅ Student added successfully!\n";
-    }
-
-    void viewAll() {
-        if (students.empty()) {
-            cout << "📂 No records found.\n";
-            return;
-        }
-        for (auto &s : students) s.display();
-    }
-
-    void saveToFile() {
-        ofstream out(fileName);
-        for (auto &s : students) out << s.toString() << endl;
-        out.close();
-    }
-
-    void loadFromFile() {
-        ifstream in(fileName);
-        if (!in) return;
-        string line;
-        while (getline(in, line)) {
-            // منطق بسيط لتقسيم النص (Parsing) يمكن تطويره لاحقاً
-            cout << "Loading: " << line << endl;
-        }
-        in.close();
-    }
-};
-
 int main() {
-    Management system;
-    int choice, id;
-    string name;
-    double gpa;
-
-    while (true) {
-        cout << "\n--- Student System ---\n1. Add Student\n2. View All\n3. Exit\nChoice: ";
-        cin >> choice;
-
-        if (choice == 1) {
-            cout << "Enter ID, Name, GPA: ";
-            cin >> id >> name >> gpa;
-            system.addStudent(id, name, gpa);
-        } else if (choice == 2) {
-            system.viewAll();
-        } else if (choice == 3) {
-            break;
-        }
-    }
-    return 0;
+double num1 , num2;
+int choice;
+char confirm;
+do {
+cout << "Welcome to the My Calculator" << endl;
+cout << "Enter first number: ";
+cin >> num1;
+cout << "Enter second number: ";
+cin >> num2;
+cout << "\nSelect an operation:" << endl;
+cout << "1. Addition (+)" << endl;
+cout << "2. Subtraction (-)" << endl;
+cout << "3. Multiplication (*)" << endl;
+cout << "4. Division (/)" << endl;
+cout << "Choice: ";
+cin >> choice;
+if (choice == 1)
+cout << "Result: " << num1 + num2 << endl;
+else if (choice == 2)
+cout << "Result: " << num1 - num2 << endl;
+else if (choice == 3)
+cout << "Result: " << num1 * num2 << endl;
+else if (choice == 4) {
+if (num2 != 0)
+cout << "Result: " << num1 / num2 << endl;
+else
+cout << "Error: Division by zero!" << endl;
+}
+else
+cout << "Invalid selection!" << endl;
+cout << "\nDo you want to perform another calculation? (y/n): ";
+cin >> confirm;
+} while (confirm == 'y' || confirm == 'Y');
+cout << "Thank you for using the calculator. Goodbye!" << endl;
+return 0;
 }
