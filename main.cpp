@@ -6,9 +6,9 @@ int choice;
 char confirm;
 do {
 
-cout << "Enter first number: ";
+
 cin >> num1;
-cout << "Enter second number: ";
+
 cin >> num2;
 cout << "\nSelect an operation:" << endl;
 cout << "1. Addition (+)" << endl;
