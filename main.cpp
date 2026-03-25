@@ -5,7 +5,7 @@ double num1 , num2;
 int choice;
 char confirm;
 do {
-cout << "Welcome to the My Calculator" << endl;
+
 cout << "Enter first number: ";
 cin >> num1;
 cout << "Enter second number: ";
