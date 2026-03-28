@@ -120,21 +120,39 @@
         <button onclick="append('0')">0</button>
         <button onclick="append('.')">.</button>
         <button class="equal" onclick="calculate()">=</button>
+<button onclick="copyResult()">Copy</button>
     </div>
     <div class="footer">Developed by: Ahmed Abdul Lateef</div>
 </div>
 
 <script>
-    let screen = document.
-     getElementById('screen');
-    function append(val) { if (screen.value === "Error") screen.value = ""; screen.value += val; }
-    function clearScreen() { screen.value = ""; }
-    function deleteLast() { screen.value = screen.value.slice(0, -1); }
+    let screen = document.getElementById('screen');
+
+    function append(val) {
+        if (screen.value === "Error") screen.value = "";
+        screen.value += val;
+    }
+
+    function clearScreen() {
+        screen.value = "";
+    }
+
+    function deleteLast() {
+        screen.value = screen.value.slice(0, -1);
+    }
+
     function calculate() {
         try {
-            let result = eval(screen.value.replace('×', '*').replace('÷', '/'));
+            let result = eval(screen.value.replace('x', '*').replace('÷', '/'));
             screen.value = Number.isInteger(result) ? result : result.toFixed(2);
-        } catch (e) { screen.value = "Error"; }
+        } catch (e) {
+            screen.value = "Error";
+        }
+    }
+
+    function copyResult() {
+        navigator.clipboard.writeText(screen.value);
+        alert("Copied!");
     }
 </script>
 
